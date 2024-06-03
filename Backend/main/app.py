@@ -18,7 +18,7 @@ def token_required(f):
     return decorated
 
 @app.route('/generate_fusion_text', methods=['POST'])
-@token_required
+@token_requireds
 def generate_fusion_text():
     data = request.get_json()
     # Your logic for generating fusion text goes here
