@@ -3,11 +3,11 @@ import textwrap
 
 import google.generativeai as genai
 
-from IPython.display import display
-from IPython.display import Markdown
+# from IPython.display import display
+# from IPython.display import Markdown
 
 from flask import Flask, request, jsonify
-from functools import wraps
+# from functools import wraps
 
 app = Flask(__name__)
 
