@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 
-import pathlib
-import textwrap
+# import pathlib
+# import textwrap
 
 import google.generativeai as genai
 
@@ -13,7 +13,12 @@ import google.generativeai as genai
 
 app = Flask(__name__)
 
-GOOGLE_API_KEY = ""
+# run app
+@app.route('/hello', methods=['GET'])
+def hello_world():
+    return jsonify({'message': 'Fusion text generated successfully!', 'data': "aaa"})
+
+GOOGLE_API_KEY = "AIzaSyArNSa02eNzOV1zRlUCVhcpzdG_81SLWuU"
 
 # init model api key
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -24,14 +29,20 @@ modelstring = ""
 # Suppose we have this token for simplification
 ACCESS_TOKEN = "your-secure-token"
 
-
 @app.route('/list_models', methods=['GET'])
 def list_models():
-    for m in genai.list_models():
-    if 'generateContent' in m.supported_generation_methods:
-        modelstring += m.name
-    # Your logic for generating fusion text goes here
-    return jsonify({'message': 'Fusion text generated successfully!', 'data': modelstring})
+    modelstring = ""
+    try:
+        for m in genai.list_models():
+            if 'generateContent' in m.supported_generation_methods:
+                modelstring += m.name + " "  # Concatenate model names with a space or any delimiter you prefer
+        # Your logic for generating fusion text goes here
+        return jsonify({'message': 'Fusion text generated successfully!', 'data': modelstring})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # debug code
 # def token_required(f):
